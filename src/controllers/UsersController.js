@@ -1,4 +1,4 @@
-const { hash, compare } = require("bcryptjs")
+const { hash } = require("bcryptjs")
 const AppError = require("../utils/AppError")
 
 const knex = require("../database/knex")
@@ -6,6 +6,10 @@ const knex = require("../database/knex")
 class UsersController {
 	async create(req, res) {
 		const { name, email, password } = req.body
+
+		if (password.length < 6) {
+			throw new AppError("A senha deve conter, no mínimo, 6 caracteres.")
+		}
 
 		const checkUserExist = await knex("users").where("email", email)
 
