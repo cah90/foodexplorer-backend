@@ -8,6 +8,8 @@ const DishesController = require("../controllers/DishesController")
 const dishesRoutes = Router()
 const dishesController = new DishesController()
 
+dishesRoutes.get("/", dishesController.showAll)
+dishesRoutes.get("/:dishId", dishesController.show)
 dishesRoutes.post("/", upload.single("image"), dishesController.create)
 
 module.exports = dishesRoutes

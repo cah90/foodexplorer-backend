@@ -4,6 +4,37 @@ const DiskStorage = require("../providers/DiskStorage")
 const knex = require("../database/knex")
 
 class DishesController {
+	async showAll(req, res) {
+		const allDishes = await knex("dishes")
+			.innerJoin("categories", "categories.id", "dishes.category_id")
+			.select(
+				"categories.name as category_name",
+				"dishes.name as dishes_name",
+				"dishes.description",
+				"dishes.price",
+				"dishes.image"
+			)
+
+		return res.json(allDishes)
+	}
+
+	async show(req, res) {
+		const { dishId } = req.params
+
+		const dish = await knex("dishes")
+			.innerJoin("ingredients", "dishes.id", "ingredients.dish_id")
+			.select(
+				"dishes.name as dishes_name",
+				"dishes.description",
+				"dishes.price",
+				"dishes.image",
+				knex.raw('GROUP_CONCAT(ingredients.name, ", ") as ingredients_name')
+			)
+			.where("dishes.id", dishId)
+
+		return res.json(dish)
+	}
+
 	async create(req, res) {
 		const { name, description, price, ingredients, category_id } = req.body
 
