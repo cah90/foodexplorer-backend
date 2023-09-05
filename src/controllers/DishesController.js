@@ -69,6 +69,57 @@ class DishesController {
 
 		return res.status(201).json()
 	}
+
+	async delete(req, res) {
+		const { dishId } = req.params
+
+		await knex("dishes").where("id", dishId).delete()
+
+		return res.json()
+	}
+
+	async update(req, res) {
+		const { dishId } = req.params
+		const { name, description, price, ingredients, category_id } = req.body
+		const image = req.file.filename
+
+		const diskStorage = new DiskStorage()
+
+		const dish = await knex("dishes").where({ id: dishId }).first()
+
+		if (!dish) {
+			throw new AppError("Esse prato não existe.", 401)
+		}
+
+		if (dish.image) {
+			await diskStorage.deleteFile(dish.image)
+		}
+
+		const imageFilename = await diskStorage.saveFile(image)
+
+		await knex("dishes").where("id", dishId).update({
+			name: name,
+			description: description,
+			price: price,
+			category_id: category_id,
+			image: imageFilename,
+		})
+
+		const ingredientsUpdated = ingredients.split(",").map((ingredient) => {
+			return {
+				name: ingredient,
+				dish_id: dish.id,
+			}
+		})
+
+		await knex("ingredients").where("dish_id", dishId).delete()
+
+		await knex("ingredients")
+			.where("dish_id", dishId)
+			.insert(ingredientsUpdated)
+
+		return res.json()
+	}
 }
 
 module.exports = DishesController

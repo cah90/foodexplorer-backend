@@ -11,5 +11,7 @@ const dishesController = new DishesController()
 dishesRoutes.get("/", dishesController.showAll)
 dishesRoutes.get("/:dishId", dishesController.show)
 dishesRoutes.post("/", upload.single("image"), dishesController.create)
+dishesRoutes.delete("/:dishId", dishesController.delete)
+dishesRoutes.put("/:dishId", upload.single("image"), dishesController.update)
 
 module.exports = dishesRoutes
