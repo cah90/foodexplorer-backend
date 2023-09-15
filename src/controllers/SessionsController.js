@@ -9,6 +9,8 @@ class SessionsController {
 	async create(req, res) {
 		const { email, password } = req.body
 
+		console.log(email, password)
+
 		const user = await knex("users").where({ email }).first()
 
 		if (!user) {
@@ -27,7 +29,16 @@ class SessionsController {
 			expiresIn,
 		})
 
-		return res.json({ user, token })
+		res.cookie("token", token, {
+			httpOnly: true,
+			sameSite: "Strict",
+			secure: true,
+			maxAge: 15 * 60 * 1000,
+		})
+
+		delete user.password
+
+		return res.status(201).json({ user })
 	}
 }
 
