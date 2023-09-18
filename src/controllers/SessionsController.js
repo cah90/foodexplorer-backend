@@ -9,8 +9,6 @@ class SessionsController {
 	async create(req, res) {
 		const { email, password } = req.body
 
-		console.log(email, password)
-
 		const user = await knex("users").where({ email }).first()
 
 		if (!user) {

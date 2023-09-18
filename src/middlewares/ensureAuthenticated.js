@@ -5,8 +5,6 @@ const authConfig = require("../configs/auth")
 function ensureAuthenticated(req, res, next) {
 	const authHeader = req.headers
 
-	console.log(req.headers)
-
 	if (!authHeader.cookie) {
 		throw new AppError("JWT Token não informado", 401)
 	}
