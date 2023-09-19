@@ -8,11 +8,13 @@ class DishesController {
 		const allDishes = await knex("dishes")
 			.innerJoin("categories", "categories.id", "dishes.category_id")
 			.select(
+				"categories.id as category_id",
 				"categories.name as category_name",
 				"dishes.name as dishes_name",
 				"dishes.description",
 				"dishes.price",
-				"dishes.image"
+				"dishes.image",
+				"dishes.category_id"
 			)
 
 		return res.json(allDishes)
