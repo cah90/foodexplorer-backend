@@ -11,6 +11,7 @@ class DishesController {
 				"categories.id as category_id",
 				"categories.name as category_name",
 				"dishes.name as dishes_name",
+				"dishes.id as dishes_id",
 				"dishes.description",
 				"dishes.price",
 				"dishes.image",
