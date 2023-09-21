@@ -31,9 +31,13 @@ class DishesController {
 				"dishes.description",
 				"dishes.price",
 				"dishes.image",
-				knex.raw('GROUP_CONCAT(ingredients.name, ", ") as ingredients_name')
+				knex.raw('GROUP_CONCAT(ingredients.name, ",") as ingredients_name')
 			)
 			.where("dishes.id", dishId)
+
+		const newIngredientsList = dish[0].ingredients_name.split(",")
+
+		dish[0].ingredients_name = newIngredientsList
 
 		return res.json(dish)
 	}
