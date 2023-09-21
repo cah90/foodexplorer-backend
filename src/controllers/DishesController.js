@@ -65,7 +65,7 @@ class DishesController {
 			category_id,
 		})
 
-		const ingredientsInsert = ingredients.split(",").map((ingredient) => {
+		const ingredientsInsert = ingredients.map((ingredient) => {
 			return {
 				name: ingredient,
 				dish_id: dish.id,
