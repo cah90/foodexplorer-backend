@@ -43,7 +43,8 @@ class DishesController {
 	}
 
 	async create(req, res) {
-		const { name, description, price, ingredients, category_id } = req.body
+		const { name, description, price, ingredients, category } = req.body
+		const category_id = Number(category)
 
 		const image = req.file.filename
 
@@ -65,7 +66,7 @@ class DishesController {
 			category_id,
 		})
 
-		const ingredientsInsert = ingredients.map((ingredient) => {
+		const ingredientsInsert = ingredients.split(",").map((ingredient) => {
 			return {
 				name: ingredient,
 				dish_id: dish.id,
