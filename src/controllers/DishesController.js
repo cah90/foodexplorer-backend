@@ -45,6 +45,7 @@ class DishesController {
 	async create(req, res) {
 		const { name, description, price, ingredients, category } = req.body
 		const category_id = Number(category)
+		const newPrice = Number(price)
 
 		const image = req.file.filename
 
@@ -62,7 +63,7 @@ class DishesController {
 			image: imageFilename,
 			name,
 			description,
-			price,
+			price: newPrice,
 			category_id,
 		})
 
