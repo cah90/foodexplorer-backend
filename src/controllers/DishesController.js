@@ -34,10 +34,11 @@ class DishesController {
 				knex.raw('GROUP_CONCAT(ingredients.name, ",") as ingredients_name')
 			)
 			.where("dishes.id", dishId)
+			.first()
 
-		const newIngredientsList = dish[0].ingredients_name.split(",")
+		const newIngredientsList = dish.ingredients_name.split(",")
 
-		dish[0].ingredients_name = newIngredientsList
+		dish.ingredients_name = newIngredientsList
 
 		return res.json(dish)
 	}
