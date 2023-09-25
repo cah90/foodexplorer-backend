@@ -1,5 +1,7 @@
 require("express-async-errors")
 
+require("dotenv/config")
+
 const express = require("express")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
@@ -39,6 +41,6 @@ app.use((error, req, res, next) => {
 	})
 })
 
-const PORT = 3333
+const PORT = process.env.SERVER_PORT || 3333
 
 app.listen(PORT, () => console.log(`Uhull... Server is running ${PORT}`))
