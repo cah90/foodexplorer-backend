@@ -27,18 +27,18 @@ class DishesController {
 		const dish = await knex("dishes")
 			.innerJoin("ingredients", "dishes.id", "ingredients.dish_id")
 			.select(
-				"dishes.name as dishes_name",
+				"dishes.name as name",
 				"dishes.description",
 				"dishes.price",
 				"dishes.image",
-				knex.raw('GROUP_CONCAT(ingredients.name, ",") as ingredients_name')
+				knex.raw('GROUP_CONCAT(ingredients.name, ",") as ingredients')
 			)
 			.where("dishes.id", dishId)
 			.first()
 
-		const newIngredientsList = dish.ingredients_name.split(",")
+		const newIngredientsList = dish.ingredients.split(",")
 
-		dish.ingredients_name = newIngredientsList
+		dish.ingredients = newIngredientsList
 
 		return res.json(dish)
 	}
@@ -85,12 +85,13 @@ class DishesController {
 
 		await knex("dishes").where("id", dishId).delete()
 
-		return res.json()
+		return res.status(204).json()
 	}
 
 	async update(req, res) {
 		const { dishId } = req.params
-		const { name, description, price, ingredients, category_id } = req.body
+		const { name, description, price, ingredients, category } = req.body
+
 		const image = req.file.filename
 
 		const diskStorage = new DiskStorage()
@@ -107,13 +108,15 @@ class DishesController {
 
 		const imageFilename = await diskStorage.saveFile(image)
 
-		await knex("dishes").where("id", dishId).update({
-			name: name,
-			description: description,
-			price: price,
-			category_id: category_id,
-			image: imageFilename,
-		})
+		await knex("dishes")
+			.where("id", dishId)
+			.update({
+				name: name,
+				description: description,
+				price: Number(price),
+				category_id: Number(category),
+				image: imageFilename,
+			})
 
 		const ingredientsUpdated = ingredients.split(",").map((ingredient) => {
 			return {
@@ -128,7 +131,7 @@ class DishesController {
 			.where("dish_id", dishId)
 			.insert(ingredientsUpdated)
 
-		return res.json()
+		return res.status(200).json()
 	}
 }
 
