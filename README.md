@@ -51,6 +51,37 @@ Iniciate the project
 npm run dev
 ```
 
+## Usage
+
+After having your API running, it is possible to interact with the database
+through these endpoints:
+
+```
+# Create a new session
+POST /sessions
+
+# Create a new user
+POST /users
+
+# Retrieve list of all dishes
+GET /dishes
+
+# Add a new dishes
+POST /dishes
+
+# Retrieve one dish by its ID
+GET /dishes/:id
+
+# Update a dish by its ID
+PUT /dishes/:dishId
+
+# Delete a dish by its ID
+DELETE /dishes/:dishId
+
+
+
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
