@@ -6,7 +6,7 @@ Food Explorer is the final challenge application of the Explorer course from [Ro
 
 This API works together with the frontend app that can be seen here: [Food Explorer Frontend](https://github.com/cah90/foodexplorer-frontend).
 
-The aim of this project was to create an API application for a fake restaurant that allows the administrator of the app to create, edit and delete dishes and the clients of the app to be able to login, create an account and place orders.
+The aim of this project was to create an API application for a restaurant that allows the administrator of the app to create, edit and delete dishes and the regular users of the app to be able to login, create an account, see the restaurant dishes, see each dish in detail with pictures, description and ingredients and then place orders.
 
 You can check the final result of the app by clicking here - [Food Explorer APP](https://rocketseat-foodexplorer.netlify.app/).
 
