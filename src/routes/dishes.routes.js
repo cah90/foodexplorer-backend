@@ -12,7 +12,6 @@ const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
 const verifyUserAuthorization = require("../middlewares/verifyUserAuthorization.js")
 
 dishesRoutes.use(ensureAuthenticated)
-// dishesRoutes.use(verifyUserAuthorization("admin"))
 
 dishesRoutes.get("/", dishesController.showAll)
 dishesRoutes.get("/:dishId", dishesController.show)
