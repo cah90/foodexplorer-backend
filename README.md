@@ -1,4 +1,4 @@
-# Explorer - Rocketseat
+# Explorer Course by Rocketseat
 
 ## Food Explorer Backend API - 🍔
 
@@ -10,7 +10,7 @@ The aim of this project was to create an API application for a restaurant that a
 
 You can check the final result of the app by clicking here - [Food Explorer APP](https://rocketseat-foodexplorer.netlify.app/).
 
-## Diagrama do Banco de Dados
+## Database Diagram
 
 <h1 align="center">
   <img src="./assets/database-diagram.png">
@@ -61,7 +61,14 @@ Now, install all the dependencies that the project will need.
 npm install
 ```
 
-And run the migrates for building the database tables.
+> 🔥 **Attention** </br>
+> Before running the migrations command in the command line, we need to delete the current database file that was downloaded with the project, otherwise we'll have an error when running the migrations command.
+>
+> ```
+> rm -f src/database/database.db
+> ```
+
+Now you can run the migrations for building a new database tables.
 
 ```
 npm run migrate
@@ -73,36 +80,78 @@ You can now iniciate the project.
 npm run dev
 ```
 
+If everything worked, you will see a message on your terminal saying that your server is running on port 3333.
+
 ## Usage
 
-After having your API running, it is possible to interact with the database
-through these endpoints:
+After having your API running, it is possible to send HTTP requests to the application using [Insomnia](https://insomnia.rest/download).
 
-```
-# Create a new session
-POST /sessions
+The API receives requests in the hostname "http://localhost:3333"
 
-# Create a new user
+### Creating a new user
+
 POST /users
 
-# Retrieve list of all dishes
-GET /dishes
+```
+{
+	"name": "Example",
+	"email": "example@gmail.com",
+	"password": "123456"
+}
+```
 
-# Add a new dishes
-POST /dishes
+### Creating a session
 
-# Retrieve one dish by its ID
-GET /dishes/:id
-
-# Update a dish by its ID
-PUT /dishes/:dishId
-
-# Delete a dish by its ID
-DELETE /dishes/:dishId
-
-
+POST /sessions
 
 ```
+{
+	"email": "example@gmail.com",
+	"password": "123456"
+}
+```
+
+### Creating a dish
+
+POST /dishes
+
+**Obs:** It's necessary to send this payload using multipart on Insomnia.
+
+```
+name: plate name
+description: example of a description of a plate
+price: 19.99
+ingredients: powder, water
+category_id: 2
+image: imageFile.png
+```
+
+### Updating a dish
+
+POST /dishes/:id
+
+**Obs:** It's necessary to send this payload using multipart on Insomnia.
+
+```
+name: plate name
+description: example of a description of a plate
+price: 19.99
+ingredients: powder, water
+category_id: 2
+image: imageFile.png
+```
+
+### Deleting a dish
+
+DELETE /dishes/:id
+
+### Showing all dishes
+
+GET /dishes
+
+### Showing an specific dish
+
+GET /dishes/:id
 
 ## License
 
@@ -110,4 +159,4 @@ DELETE /dishes/:dishId
 
 ## Author
 
-Made by Cássia Bernardo.
+Made by Cássia Bernardo ❤️

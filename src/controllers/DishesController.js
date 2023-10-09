@@ -8,14 +8,14 @@ class DishesController {
 		const allDishes = await knex("dishes")
 			.innerJoin("categories", "categories.id", "dishes.category_id")
 			.select(
-				"categories.id as category_id",
-				"categories.name as category_name",
-				"dishes.name as dishes_name",
 				"dishes.id as dishes_id",
+				"dishes.name as dishes_name",
 				"dishes.description",
 				"dishes.price",
 				"dishes.image",
-				"dishes.category_id"
+				"dishes.category_id",
+				"categories.id as category_id",
+				"categories.name as category_name"
 			)
 
 		return res.json(allDishes)
@@ -44,8 +44,8 @@ class DishesController {
 	}
 
 	async create(req, res) {
-		const { name, description, price, ingredients, category } = req.body
-		const category_id = Number(category)
+		const { name, description, price, ingredients, category_id } = req.body
+		const newCategoryId = Number(category_id)
 		const newPrice = Number(price)
 
 		const image = req.file.filename
@@ -65,7 +65,7 @@ class DishesController {
 			name,
 			description,
 			price: newPrice,
-			category_id,
+			category_id: newCategoryId,
 		})
 
 		const ingredientsInsert = ingredients.split(",").map((ingredient) => {
@@ -90,7 +90,7 @@ class DishesController {
 
 	async update(req, res) {
 		const { dishId } = req.params
-		const { name, description, price, ingredients, category } = req.body
+		const { name, description, price, ingredients, category_id } = req.body
 
 		const image = req.file.filename
 
@@ -114,7 +114,7 @@ class DishesController {
 				name: name,
 				description: description,
 				price: Number(price),
-				category_id: Number(category),
+				category_id: Number(category_id),
 				image: imageFilename,
 			})
 

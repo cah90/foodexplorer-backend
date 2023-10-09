@@ -1,5 +1,10 @@
 node_modules
 *.db
 .env
+
+
 uploads/*.jpg
 uploads/*.png
+
+tmp/*.jpg
+tmp/*.png
