@@ -82,8 +82,8 @@ After having your API running, it is possible to send HTTP requests to the appli
 The API receives requests in the hostname "http://localhost:3333"
 
 > 🔥 **Attention** </br>
-> To be able to test the admin routes, it is necessary to change > the **role** in the **users** table to **admin**.
-> One way of changing it, it through the software [beekeper](https://>www.beekeeperstudio.io/get).
+> To be able to test the admin routes, it is necessary to change the **role** in the **users** table to **admin**.
+> One way of changing it is by using the software [beekeper](https://>www.beekeeperstudio.io/get).
 
 ### Creating a new user
 
