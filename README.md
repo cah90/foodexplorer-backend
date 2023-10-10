@@ -61,13 +61,6 @@ Now, install all the dependencies that the project will need.
 npm install
 ```
 
-> 🔥 **Attention** </br>
-> Before running the migrations command in the command line, we need to delete the current database file that was downloaded with the project, otherwise we'll have an error when running the migrations command.
->
-> ```
-> rm -f src/database/database.db
-> ```
-
 Now you can run the migrations for building a new database tables.
 
 ```
@@ -80,13 +73,17 @@ You can now iniciate the project.
 npm run dev
 ```
 
-If everything worked, you will see a message on your terminal saying that your server is running on port 3333.
+💡 If everything worked, you will see a message on your terminal saying that your server is <u>running on port 3333</u>.
 
 ## Usage
 
 After having your API running, it is possible to send HTTP requests to the application using [Insomnia](https://insomnia.rest/download).
 
 The API receives requests in the hostname "http://localhost:3333"
+
+> 🔥 **Attention** </br>
+> To be able to test the admin routes, it is necessary to change > the **role** in the **users** table to **admin**.
+> One way of changing it, it through the software [beekeper](https://>www.beekeeperstudio.io/get).
 
 ### Creating a new user
 
@@ -117,6 +114,8 @@ POST /dishes
 
 **Obs:** It's necessary to send this payload using multipart on Insomnia.
 
+**Obs:** This routes is only available for the admin user.
+
 ```
 name: plate name
 description: example of a description of a plate
@@ -132,6 +131,8 @@ POST /dishes/:id
 
 **Obs:** It's necessary to send this payload using multipart on Insomnia.
 
+**Obs:** This routes is only available for the admin user.
+
 ```
 name: plate name
 description: example of a description of a plate
@@ -144,6 +145,8 @@ image: imageFile.png
 ### Deleting a dish
 
 DELETE /dishes/:id
+
+**Obs:** This routes is only available for the admin user.
 
 ### Showing all dishes
 
