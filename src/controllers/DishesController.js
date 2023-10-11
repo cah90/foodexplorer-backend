@@ -44,8 +44,9 @@ class DishesController {
 	}
 
 	async create(req, res) {
-		const { name, description, price, ingredients, category_id } = req.body
-		const newCategoryId = Number(category_id)
+		const { name, description, price, ingredients, category } = req.body
+
+		const newCategoryId = Number(category)
 		const newPrice = Number(price)
 
 		const image = req.file.filename
@@ -90,7 +91,7 @@ class DishesController {
 
 	async update(req, res) {
 		const { dishId } = req.params
-		const { name, description, price, ingredients, category_id } = req.body
+		const { name, description, price, ingredients, category } = req.body
 
 		const image = req.file.filename
 
@@ -114,7 +115,7 @@ class DishesController {
 				name: name,
 				description: description,
 				price: Number(price),
-				category_id: Number(category_id),
+				category_id: Number(category),
 				image: imageFilename,
 			})
 
