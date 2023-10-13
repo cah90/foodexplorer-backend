@@ -7,7 +7,6 @@ function verifyUserAuthorization(roleToVerify) {
 		console.log(role)
 
 		if (!roleToVerify.includes(role)) {
-			console.log("Entrei aqui")
 			throw new AppError("Unauthorized", 401)
 		}
 
