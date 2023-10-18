@@ -94,9 +94,19 @@ class DishesController {
 		const { dishId } = req.params
 		const { name, description, price, ingredients, category } = req.body
 
-		const image = req.file.filename
+		let hasImage, image, diskStorage, imageFilename
 
-		const diskStorage = new DiskStorage()
+		if (req.file) {
+			hasImage = true
+		} else {
+			hasImage = false
+		}
+
+		if (hasImage) {
+			image = req.file.filename
+
+			diskStorage = new DiskStorage()
+		}
 
 		const dish = await knex("dishes").where({ id: dishId }).first()
 
@@ -104,21 +114,26 @@ class DishesController {
 			throw new AppError("Esse prato não existe.", 401)
 		}
 
-		if (dish.image) {
-			await diskStorage.deleteFile(dish.image)
+		if (hasImage) {
+			if (dish.image) {
+				await diskStorage.deleteFile(dish.image)
+			}
+
+			imageFilename = await diskStorage.saveFile(image)
 		}
 
-		const imageFilename = await diskStorage.saveFile(image)
+		let params = {
+			name: name,
+			description: description,
+			price: Number(price),
+			category_id: Number(category),
+		}
 
-		await knex("dishes")
-			.where("id", dishId)
-			.update({
-				name: name,
-				description: description,
-				price: Number(price),
-				category_id: Number(category),
-				image: imageFilename,
-			})
+		if (image) {
+			params.image = imageFilename
+		}
+
+		await knex("dishes").where("id", dishId).update(params)
 
 		const ingredientsUpdated = ingredients.split(",").map((ingredient) => {
 			return {
