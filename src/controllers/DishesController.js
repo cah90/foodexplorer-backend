@@ -31,6 +31,7 @@ class DishesController {
 				"dishes.description",
 				"dishes.price",
 				"dishes.image",
+				"dishes.category_id",
 				knex.raw('GROUP_CONCAT(ingredients.name, ",") as ingredients')
 			)
 			.where("dishes.id", dishId)
